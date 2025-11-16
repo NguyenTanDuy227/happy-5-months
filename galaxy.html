@@ -132,7 +132,7 @@
         const scene = new THREE.Scene();
         
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 20;
+        camera.position.z = 14;
         
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -155,7 +155,7 @@
         scene.add(pointLight3);
         
         // Hành tinh trung tâm
-        const planetGeometry = new THREE.SphereGeometry(2.5, 64, 64);
+        const planetGeometry = new THREE.SphereGeometry(3.5, 64, 64);
         const planetMaterial = new THREE.MeshPhongMaterial({
             color: 0xffb3d9,
             emissive: 0xff69b4,
@@ -167,7 +167,7 @@
         scene.add(planet);
         
         // Vòng sáng xung quanh hành tinh
-        const glowGeometry = new THREE.SphereGeometry(2.8, 32, 32);
+        const glowGeometry = new THREE.SphereGeometry(3.9, 32, 32);
         const glowMaterial = new THREE.MeshBasicMaterial({
             color: 0xff69b4,
             transparent: true,
@@ -180,7 +180,7 @@
         // Các vòng quang
         const rings = [];
         for (let i = 0; i < 3; i++) {
-            const ringGeometry = new THREE.TorusGeometry(3.5 + i * 0.5, 0.08, 16, 100);
+            const ringGeometry = new THREE.TorusGeometry(4.5 + i * 0.7, 0.1, 16, 100);
             const ringMaterial = new THREE.MeshPhongMaterial({
                 color: new THREE.Color().setHSL(0.9 + i * 0.02, 0.8, 0.6),
                 emissive: new THREE.Color().setHSL(0.9 + i * 0.02, 1, 0.5),
@@ -203,7 +203,7 @@
             const frameGroup = new THREE.Group();
             
             // Mặt phẳng cho ảnh
-            const photoGeometry = new THREE.PlaneGeometry(2, 2);
+            const photoGeometry = new THREE.PlaneGeometry(3, 3);
             const photoMaterial = new THREE.MeshBasicMaterial({
                 color: 0xffffff,
                 side: THREE.DoubleSide
@@ -221,7 +221,7 @@
             frameGroup.add(photo);
             
             // Viền khung sáng
-            const borderGeometry = new THREE.PlaneGeometry(2.3, 2.3);
+            const borderGeometry = new THREE.PlaneGeometry(3.4, 3.4);
             const borderMaterial = new THREE.MeshPhongMaterial({
                 color: 0xff69b4,
                 emissive: 0xff1493,
@@ -235,7 +235,7 @@
             frameGroup.add(border);
             
             // Hào quang
-            const haloGeometry = new THREE.PlaneGeometry(2.8, 2.8);
+            const haloGeometry = new THREE.PlaneGeometry(4, 4);
             const haloMaterial = new THREE.MeshBasicMaterial({
                 color: 0xff69b4,
                 transparent: true,
@@ -248,7 +248,7 @@
             
             // Vị trí quỹ đạo
             const angle = (index / 14) * Math.PI * 2;
-            const radius = 9 + (index % 3) * 1.5; // Tạo 3 tầng quỹ đạo
+            const radius = 10 + (index % 3) * 2; // Tăng bán kính quỹ đạo
             
             frameGroup.userData = {
                 angle: angle,
