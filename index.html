@@ -591,14 +591,14 @@
 
             function createHeart() {
                 if (heartCount >= maxHearts) return
-                
+
                 const heart = document.createElement('div')
                 heart.className = 'heart'
                 heart.textContent = '❤️'
                 heart.style.left = Math.random() * 100 + '%'
                 heart.style.animationDelay = Math.random() * 2 + 's'
                 document.getElementById('heartsContainer').appendChild(heart)
-                
+
                 heartCount++
 
                 setTimeout(() => {
