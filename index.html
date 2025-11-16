@@ -24,13 +24,15 @@
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                 min-height: 100vh;
                 overflow-x: hidden;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
 
             .page {
                 display: none;
                 min-height: 100vh;
                 padding: 20px;
-                animation: fadeIn 1s ease-in;
+                animation: fadeIn 0.6s ease-in;
             }
 
             .page.active {
@@ -73,6 +75,13 @@
                 color: #666;
             }
 
+            .qr-code img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 12px;
+            }
+
             .scan-text {
                 font-size: 28px;
                 font-weight: bold;
@@ -103,10 +112,11 @@
                 animation: blink 1.5s infinite;
                 box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
                 transition: transform 0.3s;
+                touch-action: manipulation;
             }
 
-            .arrow-button:hover {
-                transform: translateY(-3px);
+            .arrow-button:active {
+                transform: scale(0.95);
             }
 
             @keyframes blink {
@@ -144,6 +154,7 @@
                 position: relative;
                 cursor: pointer;
                 animation: float 3s ease-in-out infinite;
+                will-change: transform;
             }
 
             @keyframes float {
@@ -153,33 +164,30 @@
                 }
                 50% {
                     transform: translateY(-15px);
-                } /* Giảm nhẹ độ nổi */
+                }
             }
 
-            /* --- Phần Thân Phong Bì --- */
             .envelope-body {
                 position: absolute;
                 left: 0;
                 width: 300px;
-                height: 150px; /* Chiều cao thân phong bì */
+                height: 150px;
                 background: #f5f5f5;
                 border: 2px solid #ddd;
-                border-top: none; /* Nắp sẽ che phần viền trên */
+                border-top: none;
             }
 
-            /* --- Trang Trí Thêm Trái Tim Nhấp Nháy Cho Phong Bì --- */
             .envelope-body::before {
-                content: '❤️'; /* Biểu tượng trái tim */
+                content: '❤️';
                 position: absolute;
-                top: 30px; /* Đặt ở gần viền trên của thân phong bì */
+                top: 30px;
                 left: 50%;
                 transform: translateX(-50%);
-                font-size: 24px; /* Kích thước trái tim */
-                z-index: 100; /* Đảm bảo nó nằm trên thân phong bì */
-                animation: heartBeat 1.5s ease-in-out infinite; /* Tạo hiệu ứng nhấp nháy/đập */
+                font-size: 24px;
+                z-index: 100;
+                animation: heartBeat 1.5s ease-in-out infinite;
             }
 
-            /* Keyframes cho hiệu ứng nhấp nháy/đập */
             @keyframes heartBeat {
                 0%,
                 100% {
@@ -187,33 +195,31 @@
                     opacity: 1;
                 }
                 50% {
-                    transform: translateX(-50%) scale(1.15); /* Phóng to nhẹ */
+                    transform: translateX(-50%) scale(1.15);
                     opacity: 0.8;
                 }
             }
 
-            /* --- Phần Đáy Phong Bì (Tam giác dưới) --- */
             .envelope-bottom {
                 position: absolute;
-                bottom: 50px; /* Đặt ở đáy của envelope-body */
+                bottom: 50px;
                 left: 0;
                 width: 0;
                 height: 0;
-                border-left: 150px solid #f5f5f5; /* 1/2 width */
-                border-right: 150px solid #f5f5f5; /* 1/2 width */
-                border-bottom: 100px solid #dcdcdc; /* Màu tối hơn */
+                border-left: 150px solid #f5f5f5;
+                border-right: 150px solid #f5f5f5;
+                border-bottom: 100px solid #dcdcdc;
                 z-index: 10;
-                transform: translateY(50px); /* Kéo xuống để phần tam giác nằm dưới */
-                border-radius: 0 0 5px 5px; /* Bo góc nhẹ */
+                transform: translateY(50px);
+                border-radius: 0 0 5px 5px;
             }
 
-            /* --- Phần Nắp Phong Bì (Tam giác trên) --- */
             .envelope-flap {
                 width: 0;
                 height: 0;
-                border-left: 150px solid transparent; /* 1/2 width */
-                border-right: 150px solid transparent; /* 1/2 width */
-                border-top: 100px solid #fff; /* Chiều cao nắp */
+                border-left: 150px solid transparent;
+                border-right: 150px solid transparent;
+                border-top: 100px solid #fff;
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -225,7 +231,7 @@
 
             .envelope.open .envelope-flap {
                 transform: rotateX(180deg);
-                border-top-color: #f5f5f5; /* Đổi màu khi mở để thấy mặt trong */
+                border-top-color: #f5f5f5;
             }
 
             .letter-content {
@@ -238,6 +244,7 @@
                 overflow-y: auto;
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
                 animation: slideUp 1s;
+                -webkit-overflow-scrolling: touch;
             }
 
             .letter-content.show {
@@ -289,17 +296,6 @@
                 font-size: 36px;
                 margin-bottom: 30px;
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-                animation: glow 2s ease-in-out infinite;
-            }
-
-            @keyframes glow {
-                0%,
-                100% {
-                    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-                }
-                50% {
-                    text-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
-                }
             }
 
             .photo-grid {
@@ -327,15 +323,6 @@
             .photo-card:nth-child(3) {
                 animation-delay: 0.3s;
             }
-            .photo-card:nth-child(4) {
-                animation-delay: 0.4s;
-            }
-            .photo-card:nth-child(5) {
-                animation-delay: 0.5s;
-            }
-            .photo-card:nth-child(6) {
-                animation-delay: 0.6s;
-            }
 
             @keyframes slideIn {
                 from {
@@ -348,9 +335,8 @@
                 }
             }
 
-            .photo-card:hover {
-                transform: translateY(-10px) scale(1.02);
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            .photo-card:active {
+                transform: scale(0.98);
             }
 
             .photo-placeholder {
@@ -366,6 +352,7 @@
                 padding: 20px;
             }
 
+            /* Optimized hearts animation - reduced frequency */
             .hearts-animation {
                 position: fixed;
                 top: 0;
@@ -379,8 +366,9 @@
             .heart {
                 position: absolute;
                 font-size: 30px;
-                animation: float-heart 4s ease-in infinite;
+                animation: float-heart 5s ease-in infinite;
                 opacity: 0;
+                will-change: transform;
             }
 
             @keyframes float-heart {
@@ -409,10 +397,11 @@
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
                 z-index: 1001;
                 transition: transform 0.3s;
+                touch-action: manipulation;
             }
 
-            .music-control:hover {
-                transform: scale(1.1);
+            .music-control:active {
+                transform: scale(0.9);
             }
 
             .music-control.playing {
@@ -445,6 +434,28 @@
                 .photo-grid {
                     grid-template-columns: 1fr;
                 }
+
+                .envelope {
+                    width: 250px;
+                    height: 167px;
+                }
+
+                .envelope-body {
+                    width: 250px;
+                    height: 125px;
+                }
+
+                .envelope-flap {
+                    border-left: 125px solid transparent;
+                    border-right: 125px solid transparent;
+                    border-top: 83px solid #fff;
+                }
+
+                .envelope-bottom {
+                    border-left: 125px solid #f5f5f5;
+                    border-right: 125px solid #f5f5f5;
+                    border-bottom: 83px solid #dcdcdc;
+                }
             }
         </style>
     </head>
@@ -459,7 +470,7 @@
         <div class="page active" id="page1">
             <div class="qr-container">
                 <div class="qr-code">
-                    <img width="250" height="250" src="images/main-page/qr.jpg" />
+                    <img width="250" height="250" src="images/main-page/qr.jpg" alt="QR Code" loading="lazy" />
                 </div>
                 <div class="scan-text">Quét Em Đi ❤️</div>
                 <button class="arrow-button" onclick="showLetter()">👉 Nhấn vào đây nè 👈</button>
@@ -529,13 +540,13 @@
                 <div class="gallery-title">✨ GALAXY LOVE ✨</div>
 
                 <div class="qr-code" style="margin: 20px auto; background: white; border-radius: 15px">
-                    <img src="images/main-page/qr-2.png"/>
+                    <img src="images/main-page/qr-2.png" alt="Gallery QR" loading="lazy" />
                 </div>
             </div>
         </div>
 
         <!-- Audio -->
-        <audio id="bgMusic" loop>
+        <audio id="bgMusic" loop preload="none">
             <source src="nguyen-yeu-huong-ly.mp3" type="audio/mpeg" />
         </audio>
 
@@ -572,8 +583,13 @@
                 { once: true }
             )
 
-            // Hearts animation
+            // Optimized hearts animation - reduced frequency and max count
+            let heartCount = 0
+            const maxHearts = 15 // Limit maximum hearts on screen
+
             function createHeart() {
+                if (heartCount >= maxHearts) return
+
                 const heart = document.createElement('div')
                 heart.className = 'heart'
                 heart.textContent = '❤️'
@@ -581,10 +597,16 @@
                 heart.style.animationDelay = Math.random() * 2 + 's'
                 document.getElementById('heartsContainer').appendChild(heart)
 
-                setTimeout(() => heart.remove(), 4000)
+                heartCount++
+
+                setTimeout(() => {
+                    heart.remove()
+                    heartCount--
+                }, 5000)
             }
 
-            setInterval(createHeart, 300)
+            // Reduce heart creation frequency
+            setInterval(createHeart, 800)
 
             // Show letter
             function showLetter() {
@@ -609,6 +631,13 @@
                 document.getElementById('letterOverlay').classList.remove('show')
                 document.getElementById('page2').classList.add('active')
             }
+
+            // Pause animations when page is hidden to save battery
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden && isPlaying) {
+                    music.pause()
+                }
+            })
         </script>
     </body>
 </html>
