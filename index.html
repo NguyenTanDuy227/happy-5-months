@@ -26,7 +26,19 @@
                 overflow-x: hidden;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
-                background-attachment: fixed;
+                position: fixed;
+                width: 100%;
+            }
+            
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+                z-index: -1;
             }
 
             .page {
@@ -79,8 +91,7 @@
             }
 
             .arrow-button {
-                display: flex;
-                margin: 0 auto;
+                display: inline-block;
                 margin-top: 20px;
                 padding: 16px 40px;
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -91,12 +102,15 @@
                 font-weight: 600;
                 cursor: pointer;
                 box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
-                transition: transform 0.2s ease;
                 touch-action: manipulation;
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
 
             .arrow-button:active {
-                transform: scale(0.95);
+                transform: translateZ(0) scale(0.95);
+                -webkit-transform: translateZ(0) scale(0.95);
+                box-shadow: 0 5px 20px rgba(118, 75, 162, 0.3);
             }
 
             /* Letter Styles - Simplified */
@@ -177,6 +191,8 @@
                 overflow-y: auto;
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
                 -webkit-overflow-scrolling: touch;
+                transform: translateZ(0);
+                will-change: scroll-position;
             }
 
             .letter-content.show {
@@ -304,13 +320,18 @@
                 height: 100%;
                 pointer-events: none;
                 z-index: 1;
+                display: none;
+            }
+            
+            .hearts-animation.active {
+                display: block;
             }
 
             .heart {
                 position: absolute;
                 font-size: 24px;
                 opacity: 0;
-                animation: float-heart 5s ease-in infinite;
+                animation: float-heart 5s ease-in forwards;
             }
 
             @keyframes float-heart {
@@ -341,13 +362,15 @@
                 cursor: pointer;
                 box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
                 z-index: 1001;
-                transition: transform 0.2s ease;
                 touch-action: manipulation;
                 font-size: 30px;
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
 
             .music-control:active {
-                transform: scale(0.95);
+                transform: translateZ(0) scale(0.95);
+                -webkit-transform: translateZ(0) scale(0.95);
             }
 
             @media (max-width: 768px) {
@@ -539,12 +562,15 @@
                 { once: true }
             )
 
-            // Reduced hearts animation - only 6 hearts max, slower creation
+            // Reduced hearts animation - only 6 hearts max, slower creation, pause when scrolling
             let heartCount = 0
             const maxHearts = 6
+            let heartInterval
+            let isScrolling = false
+            let scrollTimeout
 
             function createHeart() {
-                if (heartCount >= maxHearts) return
+                if (heartCount >= maxHearts || isScrolling) return
 
                 const heart = document.createElement('div')
                 heart.className = 'heart'
@@ -562,7 +588,29 @@
                 }, 5000)
             }
 
-            setInterval(createHeart, 2000)
+            // Start hearts animation
+            function startHearts() {
+                document.getElementById('heartsContainer').classList.add('active')
+                heartInterval = setInterval(createHeart, 2000)
+            }
+
+            // Stop hearts animation
+            function stopHearts() {
+                clearInterval(heartInterval)
+                document.getElementById('heartsContainer').classList.remove('active')
+            }
+
+            // Detect scrolling and pause hearts
+            document.addEventListener('scroll', () => {
+                isScrolling = true
+                clearTimeout(scrollTimeout)
+                scrollTimeout = setTimeout(() => {
+                    isScrolling = false
+                }, 150)
+            }, true)
+
+            // Start hearts on page load
+            setTimeout(startHearts, 1000)
 
             // Show letter
             function showLetter() {
