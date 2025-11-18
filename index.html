@@ -194,8 +194,11 @@
                 overflow-y: auto;
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
                 -webkit-overflow-scrolling: touch;
+            }
+
+            .letter-content * {
                 transform: translateZ(0);
-                will-change: scroll-position;
+                -webkit-transform: translateZ(0);
             }
 
             .letter-content.show {
@@ -635,6 +638,24 @@
                 setTimeout(() => {
                     envelope.style.display = 'none'
                     letterContent.classList.add('show')
+
+                    // Force iOS Safari to render all content immediately
+                    setTimeout(() => {
+                        letterContent.style.transform = 'translateZ(0)'
+                        letterContent.scrollTop = 0
+
+                        // Trigger a reflow to force full content rendering
+                        const forceReflow = letterContent.offsetHeight
+
+                        // Add scroll listener to force rendering
+                        letterContent.addEventListener(
+                            'scroll',
+                            function () {
+                                this.style.transform = 'translateZ(0)'
+                            },
+                            { passive: true }
+                        )
+                    }, 100)
                 }, 800)
             }
 
