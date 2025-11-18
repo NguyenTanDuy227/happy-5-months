@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link type="image/png" sizes="16x16" rel="icon" href="favicons/icons8-favorite-windows-11-color-16.png" />
+        <link type="image/png" sizes="32x32" rel="icon" href="favicons/icons8-favorite-windows-11-color-32.png" />
+        <link type="image/png" sizes="96x96" rel="icon" href="favicons/icons8-favorite-windows-11-color-96.png" />
         <title>Hành Tinh Lãng Mạn</title>
         <style>
             * {
@@ -98,6 +101,35 @@
                     display: flex;
                 }
             }
+
+            .music-controls {
+                position: absolute;
+                bottom: 30px; /* Đặt ở dưới cùng */
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 10;
+                text-align: center;
+            }
+
+            #music-toggle-btn {
+                background: rgba(255, 105, 180, 0.7);
+                color: #0a0015;
+                border: 2px solid #ffb3d9;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                border-radius: 25px;
+                cursor: pointer;
+                outline: none;
+                transition: all 0.3s ease;
+                box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+            }
+
+            #music-toggle-btn:hover {
+                background: #ff69b4;
+                box-shadow: 0 0 20px #ff69b4;
+                transform: scale(1.05);
+            }
         </style>
     </head>
     <body>
@@ -112,6 +144,14 @@
         <div class="info">
             ✨ Milky Way Galaxy ✨
             <div class="subtitle">Vũ trụ của tình yêu chúng ta</div>
+        </div>
+
+        <div class="music-controls">
+            <audio id="background-music" loop>
+                <source src="audios/Nguyện Yêu.mp3" type="audio/mp3" />
+                Trình duyệt của bạn không hỗ trợ phần tử audio.
+            </audio>
+            <button id="music-toggle-btn">🎵 Tắt Nhạc</button>
         </div>
 
         <canvas id="canvas"></canvas>
@@ -437,6 +477,63 @@
             // ✨ Xóa tương tác chuột cũ, thay bằng OrbitControls ✨
 
             animate()
+
+            const audio = document.getElementById('background-music')
+            const toggleBtn = document.getElementById('music-toggle-btn')
+            let isPlaying = true // Ban đầu giả định đang phát (vì có autoplay)
+
+            // Hàm phát nhạc
+            function playAudio() {
+                // Dùng .play() để vượt qua chính sách autoplay sau khi người dùng đã tương tác.
+                audio
+                    .play()
+                    .then(() => {
+                        isPlaying = true
+                        toggleBtn.textContent = '🎵 Tắt Nhạc'
+                    })
+                    .catch(error => {
+                        // Xử lý lỗi nếu việc phát không thành công (ví dụ: trình duyệt chặn)
+                        console.error('Lỗi khi phát nhạc:', error)
+                        isPlaying = false
+                        toggleBtn.textContent = '🎶 Bật Nhạc'
+                    })
+            }
+
+            // Hàm tạm dừng nhạc
+            function pauseAudio() {
+                audio.pause()
+                isPlaying = false
+                toggleBtn.textContent = '🎶 Bật Nhạc'
+            }
+
+            // Xử lý sự kiện khi người dùng nhấn nút
+            toggleBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    pauseAudio()
+                } else {
+                    // Gọi hàm playAudio để kích hoạt nhạc
+                    playAudio()
+                }
+            })
+
+            // THÊM: Cố gắng phát lần đầu tiên mà không có tương tác người dùng
+            // Điều này THƯỜNG sẽ bị chặn, nhưng nếu nó thành công (một số trình duyệt/điều kiện cho phép),
+            // thì âm thanh sẽ phát. Quan trọng là người dùng vẫn có nút để điều khiển.
+            // Nếu trình duyệt chặn, nút sẽ tự động chuyển thành '🎶 Bật Nhạc' sau lần đầu nhấn.
+
+            // CHỈ CẦN BỔ SUNG ĐOẠN JS NÀY Ở CUỐI THẺ <script> CỦA BẠN:
+
+            document.addEventListener('DOMContentLoaded', () => {
+                // Thử phát ngay. Nếu thành công (nhờ chính sách nới lỏng hoặc tương tác trước đó), nó sẽ phát.
+                // Nếu thất bại (thường xảy ra), nhạc sẽ không phát, và nút vẫn là '🎵 Tắt Nhạc'.
+                // Lần nhấn nút đầu tiên của người dùng sẽ kích hoạt playAudio().
+                audio.play().catch(error => {
+                    // Nếu việc tự động phát thất bại, chúng ta cập nhật nút để mời người dùng tương tác.
+                    isPlaying = false
+                    toggleBtn.textContent = '🎶 Bật Nhạc'
+                    // Sau đó, khi người dùng nhấn, hàm click ở trên sẽ gọi playAudio()
+                })
+            })
         </script>
     </body>
 </html>
