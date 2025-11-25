@@ -3,9 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <link type="image/png" sizes="16x16" rel="icon" href="favicons/icons8-favorite-windows-11-color-16.png" />
-        <link type="image/png" sizes="32x32" rel="icon" href="favicons/icons8-favorite-windows-11-color-32.png" />
-        <link type="image/png" sizes="96x96" rel="icon" href="favicons/icons8-favorite-windows-11-color-96.png" />
         <title>Happy 5 Months ❤️</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,23 +22,14 @@
                 font-family: 'Roboto', 'Noto Color Emoji', sans-serif;
                 font-weight: 400;
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+                background-attachment: fixed;
                 min-height: 100vh;
                 overflow-x: hidden;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
-                position: fixed;
-                width: 100%;
-            }
-
-            body::before {
-                content: '';
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-                z-index: -1;
+                /* iOS optimizations */
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: none;
             }
 
             .page {
@@ -50,6 +38,10 @@
                 padding: 20px;
                 opacity: 0;
                 transition: opacity 0.5s ease;
+                /* Hardware acceleration */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+                will-change: opacity;
             }
 
             .page.active {
@@ -60,7 +52,7 @@
                 opacity: 1;
             }
 
-            /* Page 1 Styles - Simplified */
+            /* Page 1 Styles - iOS Optimized */
             .welcome-container {
                 background: rgba(255, 255, 255, 0.95);
                 padding: 50px 30px;
@@ -69,6 +61,11 @@
                 text-align: center;
                 max-width: 500px;
                 width: 90%;
+                /* Hardware acceleration */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
             }
 
             .welcome-title {
@@ -79,6 +76,8 @@
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
                 margin-bottom: 20px;
+                /* Reduce repaints */
+                will-change: auto;
             }
 
             .hearts-decoration {
@@ -106,8 +105,12 @@
                 cursor: pointer;
                 box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
                 touch-action: manipulation;
+                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                transition: transform 0.1s ease, box-shadow 0.1s ease;
             }
 
             .arrow-button:active {
@@ -116,7 +119,7 @@
                 box-shadow: 0 5px 20px rgba(118, 75, 162, 0.3);
             }
 
-            /* Letter Styles - Simplified */
+            /* Letter Styles - iOS Optimized */
             .letter-overlay {
                 display: none;
                 position: fixed;
@@ -130,6 +133,11 @@
                 justify-content: center;
                 opacity: 0;
                 transition: opacity 0.3s ease;
+                /* Hardware acceleration */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
             }
 
             .letter-overlay.show {
@@ -142,6 +150,9 @@
                 height: 187px;
                 position: relative;
                 cursor: pointer;
+                /* Hardware acceleration */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
 
             .envelope-body {
@@ -153,6 +164,9 @@
                 border: 3px solid #e89f8a;
                 border-top: none;
                 border-radius: 0 0 10px 10px;
+                /* Hardware acceleration */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
 
             .envelope-body::before {
@@ -160,7 +174,8 @@
                 position: absolute;
                 top: 35px;
                 left: 50%;
-                transform: translateX(-50%);
+                transform: translateX(-50%) translateZ(0);
+                -webkit-transform: translateX(-50%) translateZ(0);
                 font-size: 48px;
             }
 
@@ -176,10 +191,12 @@
                 transition: transform 0.8s ease;
                 transform-origin: top;
                 z-index: 20;
+                will-change: transform;
             }
 
             .envelope.open .envelope-flap {
-                transform: rotateX(180deg);
+                transform: rotateX(180deg) translateZ(0);
+                -webkit-transform: rotateX(180deg) translateZ(0);
                 border-top-color: #ffecd2;
             }
 
@@ -193,12 +210,14 @@
                 max-height: 85vh;
                 overflow-y: auto;
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                /* iOS scroll optimization */
                 -webkit-overflow-scrolling: touch;
-            }
-
-            .letter-content * {
+                overscroll-behavior: contain;
+                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
             }
 
             .letter-content.show {
@@ -209,11 +228,11 @@
             @keyframes slideUp {
                 from {
                     opacity: 0;
-                    transform: translateY(30px);
+                    transform: translateY(30px) translateZ(0);
                 }
                 to {
                     opacity: 1;
-                    transform: translateY(0);
+                    transform: translateY(0) translateZ(0);
                 }
             }
 
@@ -255,6 +274,11 @@
                 background: rgba(255, 255, 255, 0.95);
                 border-radius: 25px;
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+                /* Hardware acceleration */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
             }
 
             .gallery-title {
@@ -317,7 +341,7 @@
                 background-clip: text;
             }
 
-            /* Simplified hearts animation - reduced frequency */
+            /* Optimized hearts animation - paused during scroll */
             .hearts-animation {
                 position: fixed;
                 top: 0;
@@ -327,10 +351,17 @@
                 pointer-events: none;
                 z-index: 1;
                 display: none;
+                /* Hardware acceleration */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
 
             .hearts-animation.active {
                 display: block;
+            }
+
+            .hearts-animation.paused .heart {
+                animation-play-state: paused;
             }
 
             .heart {
@@ -338,18 +369,22 @@
                 font-size: 24px;
                 opacity: 0;
                 animation: float-heart 5s ease-in forwards;
+                /* Hardware acceleration */
+                will-change: transform, opacity;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
             }
 
             @keyframes float-heart {
                 0% {
-                    transform: translateY(100vh) scale(1);
+                    transform: translateY(100vh) translateZ(0) scale(1);
                     opacity: 0.7;
                 }
                 50% {
                     opacity: 0.9;
                 }
                 100% {
-                    transform: translateY(-100px) scale(0.6);
+                    transform: translateY(-100px) translateZ(0) scale(0.6);
                     opacity: 0;
                 }
             }
@@ -370,8 +405,12 @@
                 z-index: 1001;
                 touch-action: manipulation;
                 font-size: 30px;
+                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                transition: transform 0.1s ease;
             }
 
             .music-control:active {
@@ -524,52 +563,67 @@
                     <div class="qr-code">
                         <img src="images/main-page/qr-2.png" alt="Galaxy Love QR" loading="lazy" />
                     </div>
-                    <div class="qr-label">Scan me! 📱</div>
+                    <div class="qr-label">Scan me!</div>
                 </div>
             </div>
         </div>
 
         <!-- Audio -->
-        <audio id="bgMusic" loop preload="metadata">
+        <audio id="bgMusic" loop preload="none">
             <source src="audios/Nguyện Yêu.mp3" type="audio/mpeg" />
         </audio>
 
         <script>
-            // Music control
+            // Music control - iOS optimized
             const music = document.getElementById('bgMusic')
             const musicControl = document.getElementById('musicControl')
             let isPlaying = false
+            let audioContext = null
 
-            musicControl.addEventListener('click', () => {
+            // iOS requires user interaction to play audio
+            function initAudio() {
+                if (!audioContext) {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)()
+                }
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume()
+                }
+            }
+
+            musicControl.addEventListener('click', (e) => {
+                e.preventDefault()
+                initAudio()
+                
                 if (isPlaying) {
                     music.pause()
                     musicControl.textContent = '🎵'
                 } else {
-                    music.play()
+                    music.play().catch(() => {})
                     musicControl.textContent = '🎶'
                 }
                 isPlaying = !isPlaying
             })
 
-            // Auto play music on first interaction
-            document.addEventListener(
-                'click',
-                function playMusic() {
-                    if (!isPlaying) {
-                        music.play().catch(() => {})
+            // Try auto play on first interaction
+            let firstInteraction = true
+            document.addEventListener('click', function playMusic() {
+                if (firstInteraction && !isPlaying) {
+                    firstInteraction = false
+                    initAudio()
+                    music.play().then(() => {
                         musicControl.textContent = '🎶'
                         isPlaying = true
-                    }
-                },
-                { once: true }
-            )
+                    }).catch(() => {})
+                }
+            }, { once: true })
 
-            // Reduced hearts animation - only 6 hearts max, slower creation, pause when scrolling
+            // Optimized hearts animation
             let heartCount = 0
-            const maxHearts = 6
+            const maxHearts = 4 // Reduced for better performance
             let heartInterval
             let isScrolling = false
             let scrollTimeout
+            const heartsContainer = document.getElementById('heartsContainer')
 
             function createHeart() {
                 if (heartCount >= maxHearts || isScrolling) return
@@ -580,7 +634,7 @@
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)]
                 heart.style.left = Math.random() * 100 + '%'
                 heart.style.animationDelay = Math.random() * 2 + 's'
-                document.getElementById('heartsContainer').appendChild(heart)
+                heartsContainer.appendChild(heart)
 
                 heartCount++
 
@@ -592,44 +646,56 @@
 
             // Start hearts animation
             function startHearts() {
-                document.getElementById('heartsContainer').classList.add('active')
-                heartInterval = setInterval(createHeart, 2000)
+                heartsContainer.classList.add('active')
+                heartInterval = setInterval(createHeart, 2500) // Slower creation
             }
 
             // Stop hearts animation
             function stopHearts() {
                 clearInterval(heartInterval)
-                document.getElementById('heartsContainer').classList.remove('active')
+                heartsContainer.classList.remove('active')
+            }
+
+            // Pause hearts during scroll - iOS optimization
+            function pauseHearts() {
+                heartsContainer.classList.add('paused')
+                isScrolling = true
+            }
+
+            function resumeHearts() {
+                heartsContainer.classList.remove('paused')
+                isScrolling = false
             }
 
             // Detect scrolling and pause hearts
-            document.addEventListener(
-                'scroll',
-                () => {
-                    isScrolling = true
-                    clearTimeout(scrollTimeout)
-                    scrollTimeout = setTimeout(() => {
-                        isScrolling = false
-                    }, 150)
-                },
-                true
-            )
+            let scrollElements = [window, document.getElementById('letterContent')]
+            scrollElements.forEach(element => {
+                if (element) {
+                    element.addEventListener('scroll', () => {
+                        pauseHearts()
+                        clearTimeout(scrollTimeout)
+                        scrollTimeout = setTimeout(resumeHearts, 200)
+                    }, { passive: true })
+                }
+            })
 
-            // Start hearts on page load
-            setTimeout(startHearts, 1000)
+            // Start hearts on page load - delayed for better initial performance
+            setTimeout(startHearts, 1500)
 
             // Show letter
             function showLetter() {
                 document.getElementById('letterOverlay').classList.add('show')
+                initAudio()
 
                 if (!isPlaying) {
-                    music.play().catch(() => {})
-                    musicControl.textContent = '🎶'
-                    isPlaying = true
+                    music.play().then(() => {
+                        musicControl.textContent = '🎶'
+                        isPlaying = true
+                    }).catch(() => {})
                 }
             }
 
-            // Open letter
+            // Open letter - iOS optimized
             function openLetter() {
                 const envelope = document.getElementById('envelope')
                 const letterContent = document.getElementById('letterContent')
@@ -639,23 +705,11 @@
                     envelope.style.display = 'none'
                     letterContent.classList.add('show')
 
-                    // Force iOS Safari to render all content immediately
-                    setTimeout(() => {
-                        letterContent.style.transform = 'translateZ(0)'
+                    // Force iOS Safari to render properly
+                    requestAnimationFrame(() => {
                         letterContent.scrollTop = 0
-
-                        // Trigger a reflow to force full content rendering
-                        const forceReflow = letterContent.offsetHeight
-
-                        // Add scroll listener to force rendering
-                        letterContent.addEventListener(
-                            'scroll',
-                            function () {
-                                this.style.transform = 'translateZ(0)'
-                            },
-                            { passive: true }
-                        )
-                    }, 100)
+                        letterContent.style.WebkitOverflowScrolling = 'touch'
+                    })
                 }, 800)
             }
 
@@ -663,15 +717,30 @@
             function goToGallery() {
                 document.getElementById('page1').classList.remove('active')
                 document.getElementById('letterOverlay').classList.remove('show')
-                document.getElementById('page2').classList.add('active')
+                
+                // Small delay for smooth transition
+                setTimeout(() => {
+                    document.getElementById('page2').classList.add('active')
+                }, 100)
             }
 
             // Pause animations when page is hidden
             document.addEventListener('visibilitychange', () => {
-                if (document.hidden && isPlaying) {
-                    music.pause()
+                if (document.hidden) {
+                    if (isPlaying) music.pause()
+                    pauseHearts()
+                } else {
+                    if (isPlaying) music.play().catch(() => {})
+                    resumeHearts()
                 }
             })
+
+            // iOS performance optimization - reduce animations on low memory
+            if (window.performance && window.performance.memory) {
+                if (window.performance.memory.jsHeapSizeLimit < 1000000000) {
+                    maxHearts = 2
+                }
+            }
         </script>
     </body>
 </html>
