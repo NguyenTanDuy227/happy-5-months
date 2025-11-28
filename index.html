@@ -93,7 +93,8 @@
             }
 
             .arrow-button {
-                display: inline-block;
+                display: flex;
+                margin: 0 auto;
                 margin-top: 20px;
                 padding: 16px 40px;
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -566,14 +567,13 @@
         </div>
 
         <!-- Audio -->
-        <audio id="bgMusic" loop preload="none">
+        <audio id="bgMusic" loop preload="none" autoplay>
             <source src="audios/Nguyện Yêu.mp3" type="audio/mpeg" />
         </audio>
 
         <script>
             // Music control - iOS optimized
             const music = document.getElementById('bgMusic')
-            const musicControl = document.getElementById('musicControl')
             let isPlaying = false
             let audioContext = null
 
@@ -587,32 +587,24 @@
                 }
             }
 
-            musicControl.addEventListener('click', (e) => {
-                e.preventDefault()
-                initAudio()
-                
-                if (isPlaying) {
-                    music.pause()
-                    musicControl.textContent = '🎵'
-                } else {
-                    music.play().catch(() => {})
-                    musicControl.textContent = '🎶'
-                }
-                isPlaying = !isPlaying
-            })
-
             // Try auto play on first interaction
             let firstInteraction = true
-            document.addEventListener('click', function playMusic() {
-                if (firstInteraction && !isPlaying) {
-                    firstInteraction = false
-                    initAudio()
-                    music.play().then(() => {
-                        musicControl.textContent = '🎶'
-                        isPlaying = true
-                    }).catch(() => {})
-                }
-            }, { once: true })
+            document.addEventListener(
+                'click',
+                function playMusic() {
+                    if (firstInteraction && !isPlaying) {
+                        firstInteraction = false
+                        initAudio()
+                        music
+                            .play()
+                            .then(() => {
+                                isPlaying = true
+                            })
+                            .catch(() => {})
+                    }
+                },
+                { once: true }
+            )
 
             // Optimized hearts animation
             let heartCount = 0
@@ -668,11 +660,15 @@
             let scrollElements = [window, document.getElementById('letterContent')]
             scrollElements.forEach(element => {
                 if (element) {
-                    element.addEventListener('scroll', () => {
-                        pauseHearts()
-                        clearTimeout(scrollTimeout)
-                        scrollTimeout = setTimeout(resumeHearts, 200)
-                    }, { passive: true })
+                    element.addEventListener(
+                        'scroll',
+                        () => {
+                            pauseHearts()
+                            clearTimeout(scrollTimeout)
+                            scrollTimeout = setTimeout(resumeHearts, 200)
+                        },
+                        { passive: true }
+                    )
                 }
             })
 
@@ -685,10 +681,12 @@
                 initAudio()
 
                 if (!isPlaying) {
-                    music.play().then(() => {
-                        musicControl.textContent = '🎶'
-                        isPlaying = true
-                    }).catch(() => {})
+                    music
+                        .play()
+                        .then(() => {
+                            isPlaying = true
+                        })
+                        .catch(() => {})
                 }
             }
 
@@ -714,7 +712,7 @@
             function goToGallery() {
                 document.getElementById('page1').classList.remove('active')
                 document.getElementById('letterOverlay').classList.remove('show')
-                
+
                 // Small delay for smooth transition
                 setTimeout(() => {
                     document.getElementById('page2').classList.add('active')
