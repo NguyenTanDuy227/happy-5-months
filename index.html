@@ -30,7 +30,6 @@
                 overflow-x: hidden;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
-                /* iOS optimizations */
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior: none;
             }
@@ -41,7 +40,6 @@
                 padding: 20px;
                 opacity: 0;
                 transition: opacity 0.5s ease;
-                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
                 will-change: opacity;
@@ -55,7 +53,7 @@
                 opacity: 1;
             }
 
-            /* Page 1 Styles - iOS Optimized */
+            /* Welcome Page Styles */
             .welcome-container {
                 background: rgba(255, 255, 255, 0.95);
                 padding: 50px 30px;
@@ -64,7 +62,6 @@
                 text-align: center;
                 max-width: 500px;
                 width: 90%;
-                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
                 backface-visibility: hidden;
@@ -79,7 +76,6 @@
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
                 margin-bottom: 20px;
-                /* Reduce repaints */
                 will-change: auto;
             }
 
@@ -109,7 +105,6 @@
                 cursor: pointer;
                 box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
                 touch-action: manipulation;
-                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
                 backface-visibility: hidden;
@@ -123,7 +118,7 @@
                 box-shadow: 0 5px 20px rgba(118, 75, 162, 0.3);
             }
 
-            /* Letter Styles - iOS Optimized */
+            /* Letter Overlay Styles */
             .letter-overlay {
                 display: none;
                 position: fixed;
@@ -137,7 +132,6 @@
                 justify-content: center;
                 opacity: 0;
                 transition: opacity 0.3s ease;
-                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
                 backface-visibility: hidden;
@@ -154,7 +148,6 @@
                 height: 187px;
                 position: relative;
                 cursor: pointer;
-                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
             }
@@ -168,7 +161,6 @@
                 border: 3px solid #e89f8a;
                 border-top: none;
                 border-radius: 0 0 10px 10px;
-                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
             }
@@ -214,10 +206,8 @@
                 max-height: 85vh;
                 overflow-y: auto;
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                /* iOS scroll optimization */
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior: contain;
-                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
                 backface-visibility: hidden;
@@ -270,41 +260,82 @@
                 font-size: 18px;
             }
 
-            /* Page 2 - Gallery */
-            .gallery-container {
-                width: 90%;
-                max-width: 800px;
-                padding: 40px 20px;
-                background: rgba(255, 255, 255, 0.95);
-                border-radius: 25px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-                /* Hardware acceleration */
+            /* Galaxy Page Styles */
+            #galaxyPage {
+                background: #0a0015;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            #galaxyPage.active {
+                display: block;
+            }
+
+            #canvas {
+                display: block;
+                width: 100%;
+                height: 100vh;
+            }
+
+            .galaxy-info {
+                position: absolute;
+                top: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                color: #ff69b4;
+                text-align: center;
+                font-size: 32px;
+                font-weight: bold;
+                text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.5);
+                z-index: 10;
+                pointer-events: none;
+                animation: glow 2s ease-in-out infinite;
+            }
+
+            @keyframes glow {
+                0%, 100% {
+                    text-shadow: 0 0 20px rgba(255, 105, 180, 0.8), 0 0 40px rgba(255, 105, 180, 0.5);
+                }
+                50% {
+                    text-shadow: 0 0 30px rgba(255, 105, 180, 1), 0 0 60px rgba(255, 105, 180, 0.8);
+                }
+            }
+
+            .subtitle {
+                font-size: 16px;
+                font-weight: normal;
+                margin-top: 10px;
+                color: #ffb3d9;
+            }
+
+            .music-control {
+                position: fixed;
+                bottom: 25px;
+                right: 25px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 50%;
+                width: 65px;
+                height: 65px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
+                z-index: 1001;
+                touch-action: manipulation;
+                font-size: 30px;
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
+                transition: transform 0.1s ease;
             }
 
-            .gallery-title {
-                text-align: center;
-                font-family: 'Pacifico', cursive;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                font-size: 42px;
-                margin-bottom: 30px;
+            .music-control:active {
+                transform: translateZ(0) scale(0.95);
+                -webkit-transform: translateZ(0) scale(0.95);
             }
 
-            .gallery-description {
-                text-align: center;
-                color: #666;
-                font-size: 18px;
-                margin-bottom: 30px;
-                line-height: 1.6;
-            }
-
-            /* Optimized hearts animation - paused during scroll */
             .hearts-animation {
                 position: fixed;
                 top: 0;
@@ -314,7 +345,6 @@
                 pointer-events: none;
                 z-index: 1;
                 display: none;
-                /* Hardware acceleration */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
             }
@@ -332,7 +362,6 @@
                 font-size: 24px;
                 opacity: 0;
                 animation: float-heart 5s ease-in forwards;
-                /* Hardware acceleration */
                 will-change: transform, opacity;
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
@@ -354,33 +383,41 @@
                 }
             }
 
-            .music-control {
+            .rotate-notice {
+                display: none;
                 position: fixed;
-                bottom: 25px;
-                right: 25px;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border-radius: 50%;
-                width: 65px;
-                height: 65px;
-                display: flex;
-                align-items: center;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(10, 0, 21, 0.95);
+                z-index: 9999;
                 justify-content: center;
-                cursor: pointer;
-                box-shadow: 0 8px 25px rgba(118, 75, 162, 0.4);
-                z-index: 1001;
-                touch-action: manipulation;
-                font-size: 30px;
-                /* Hardware acceleration */
-                transform: translateZ(0);
-                -webkit-transform: translateZ(0);
-                backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
-                transition: transform 0.1s ease;
+                align-items: center;
+                flex-direction: column;
             }
 
-            .music-control:active {
-                transform: translateZ(0) scale(0.95);
-                -webkit-transform: translateZ(0) scale(0.95);
+            .rotate-icon {
+                font-size: 80px;
+                margin-bottom: 20px;
+                animation: rotate-animation 2s ease-in-out infinite;
+            }
+
+            @keyframes rotate-animation {
+                0%, 100% {
+                    transform: rotate(0deg);
+                }
+                50% {
+                    transform: rotate(90deg);
+                }
+            }
+
+            .rotate-text {
+                color: #ff69b4;
+                font-size: 20px;
+                text-align: center;
+                padding: 0 20px;
+                text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
             }
 
             @media (max-width: 768px) {
@@ -402,14 +439,6 @@
 
                 .letter-content p {
                     font-size: 15px;
-                }
-
-                .gallery-container {
-                    padding: 30px 15px;
-                }
-
-                .gallery-title {
-                    font-size: 34px;
                 }
 
                 .envelope {
@@ -435,10 +464,30 @@
                     bottom: 20px;
                     right: 20px;
                 }
+
+                .galaxy-info {
+                    font-size: 24px;
+                    top: 20px;
+                }
+            }
+
+            @media (max-width: 768px) and (orientation: portrait) {
+                #galaxyPage .rotate-notice {
+                    display: flex;
+                }
             }
         </style>
     </head>
     <body>
+        <!-- Rotate Notice for Galaxy Page -->
+        <div class="rotate-notice" id="rotateNotice">
+            <div class="rotate-icon">📱➜📱</div>
+            <div class="rotate-text">
+                Vui lòng xoay ngang màn hình<br />
+                để có trải nghiệm tốt nhất ✨
+            </div>
+        </div>
+
         <!-- Hearts Animation -->
         <div class="hearts-animation" id="heartsContainer"></div>
 
@@ -506,74 +555,68 @@
                     Em thương anh rất nhiều. ❤️
                 </div>
 
-                <button class="arrow-button" onclick="goToGallery()" style="margin-top: 30px">
-                    💫 Xem Kỷ Niệm Của Chúng Mình 💫
+                <button class="arrow-button" onclick="goToGalaxy()" style="margin-top: 30px">
+                    💫 Xem Vũ Trụ Của Chúng Mình 💫
                 </button>
             </div>
         </div>
 
-        <!-- Page 2 - Gallery -->
-        <div class="page" id="page2">
-            <div class="gallery-container">
-                <div class="gallery-title">✨ Galaxy Love ✨</div>
-                <div class="gallery-description">Những khoảnh khắc yêu thương của chúng mình</div>
-
-                <div style="text-align: center; margin-top: 30px">
-                    <button class="arrow-button" onclick="goToGalaxyLink()">
-                        💌 Lưu Giữ Những Yêu Thương 💌
-                    </button>
-                </div>
+        <!-- Page 2 - Galaxy -->
+        <div class="page" id="galaxyPage">
+            <div class="galaxy-info">
+                ✨ Milky Way Galaxy ✨
+                <div class="subtitle">Vũ trụ của tình yêu chúng ta</div>
             </div>
+            <canvas id="canvas"></canvas>
         </div>
+
+        <!-- Music Control -->
+        <div class="music-control" id="musicControl" onclick="toggleMusic()">🔊</div>
 
         <!-- Audio -->
         <audio id="bgMusic" loop preload="metadata">
             <source src="audios/nguyen-yeu.aac" type="audio/aac" />
         </audio>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
         <script>
-            // Music control - iOS optimized
+            // ===== MUSIC CONTROL =====
             const music = document.getElementById('bgMusic')
+            const musicControl = document.getElementById('musicControl')
             let isPlaying = false
             let audioContext = null
-            const musicControl = document.getElementById('musicControl') // Thêm nút điều khiển nhạc nếu có
 
-            // Khởi tạo AudioContext và resume (cần tương tác người dùng)
             function initAudio() {
                 if (!audioContext) {
                     audioContext = new (window.AudioContext || window.webkitAudioContext)()
                 }
                 if (audioContext.state === 'suspended') {
-                    // Cố gắng resume AudioContext để có thể phát nhạc
                     audioContext.resume().catch(e => console.error('AudioContext resume failed:', e))
                 }
             }
 
-            // Hàm bật/tắt nhạc
             function toggleMusic() {
-                initAudio() // Khởi tạo AudioContext (chỉ làm khi có tương tác)
+                initAudio()
                 if (isPlaying) {
                     music.pause()
                     isPlaying = false
-                    // musicControl.textContent = '🔇'; // Cập nhật icon
+                    musicControl.textContent = '🔇'
                 } else {
-                    // Đảm bảo file được tải đủ trước khi play (preload="auto" sẽ giúp)
-                    music
-                        .play()
+                    music.play()
                         .then(() => {
                             isPlaying = true
-                            // musicControl.textContent = '🔊'; // Cập nhật icon
+                            musicControl.textContent = '🔊'
                         })
                         .catch(e => {
-                            console.warn("Audio play failed (maybe user hasn't interacted enough or file error):", e)
+                            console.warn("Audio play failed:", e)
                             isPlaying = false
                         })
                 }
             }
 
-            // Optimized hearts animation (giữ nguyên logic animation của bạn, nó đã khá tốt)
+            // ===== HEARTS ANIMATION =====
             let heartCount = 0
-            // Giảm số lượng trái tim tối đa hơn nữa cho hiệu suất tối đa trên iOS cũ
             const maxHearts = 3
             let heartInterval
             let isScrolling = false
@@ -587,7 +630,6 @@
                 heart.className = 'heart'
                 const hearts = ['💕', '💖', '💗']
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)]
-                // Dùng CSS variables để tránh thao tác DOM quá nhiều
                 heart.style.setProperty('--random-left', Math.random() * 100 + '%')
                 heart.style.setProperty('--random-delay', Math.random() * 2 + 's')
                 heartsContainer.appendChild(heart)
@@ -602,7 +644,7 @@
 
             function startHearts() {
                 heartsContainer.classList.add('active')
-                heartInterval = setInterval(createHeart, 3000) // Tăng khoảng thời gian tạo
+                heartInterval = setInterval(createHeart, 3000)
             }
 
             function stopHearts() {
@@ -610,11 +652,11 @@
                 heartsContainer.classList.remove('active')
             }
 
-            // Giữ nguyên các hàm pause/resume hearts
             function pauseHearts() {
                 heartsContainer.classList.add('paused')
                 isScrolling = true
             }
+
             function resumeHearts() {
                 heartsContainer.classList.remove('paused')
                 isScrolling = false
@@ -623,31 +665,24 @@
             let scrollElements = [window, document.getElementById('letterContent')]
             scrollElements.forEach(element => {
                 if (element) {
-                    element.addEventListener(
-                        'scroll',
-                        () => {
-                            pauseHearts()
-                            clearTimeout(scrollTimeout)
-                            scrollTimeout = setTimeout(resumeHearts, 200)
-                        },
-                        { passive: true }
-                    )
+                    element.addEventListener('scroll', () => {
+                        pauseHearts()
+                        clearTimeout(scrollTimeout)
+                        scrollTimeout = setTimeout(resumeHearts, 200)
+                    }, { passive: true })
                 }
             })
 
             setTimeout(startHearts, 1500)
 
-            // Show letter
+            // ===== LETTER FUNCTIONS =====
             function showLetter() {
                 document.getElementById('letterOverlay').classList.add('show')
-
-                // **Quan trọng:** Gọi toggleMusic() để phát nhạc ngay sau khi người dùng tương tác (nhấn nút)
                 if (!isPlaying) {
                     toggleMusic()
                 }
             }
 
-            // Open letter
             function openLetter() {
                 const envelope = document.getElementById('envelope')
                 const letterContent = document.getElementById('letterContent')
@@ -656,26 +691,473 @@
                 setTimeout(() => {
                     envelope.style.display = 'none'
                     letterContent.classList.add('show')
-
                     requestAnimationFrame(() => {
                         letterContent.scrollTop = 0
-                        // Thao tác nhỏ để đảm bảo render lại
                         letterContent.style.WebkitOverflowScrolling = 'touch'
                     })
                 }, 800)
             }
 
-            // Go to gallery
-            function goToGallery() {
+            // ===== TRANSITION TO GALAXY =====
+            let galaxyInitialized = false
+
+            function goToGalaxy() {
                 document.getElementById('page1').classList.remove('active')
                 document.getElementById('letterOverlay').classList.remove('show')
+                stopHearts()
 
                 setTimeout(() => {
-                    document.getElementById('page2').classList.add('active')
+                    document.getElementById('galaxyPage').classList.add('active')
+                    if (!galaxyInitialized) {
+                        galaxyInitialized = true
+                        // Add a small delay to ensure the page is visible before initializing
+                        setTimeout(() => {
+                            initGalaxy()
+                        }, 100)
+                    }
                 }, 100)
             }
 
-            // Pause animations when page is hidden
+            // ===== GALAXY VISUALIZATION =====
+            let scene, camera, renderer, controls
+            let planet, glow, rings = [], photoFrames = [], orbitingObjects = [], particles
+            let shootingStars = []
+            const imageUrls = [
+                'images/galaxy/Picture1.jpg', 'images/galaxy/Picture2.jpg', 'images/galaxy/Picture3.jpg',
+                'images/galaxy/Picture4.jpg', 'images/galaxy/Picture5.jpg', 'images/galaxy/Picture6.jpg',
+                'images/galaxy/Picture7.jpg', 'images/galaxy/Picture8.jpg', 'images/galaxy/Picture9.jpg',
+                'images/galaxy/Picture10.jpg', 'images/galaxy/Picture11.jpg', 'images/galaxy/Picture12.jpg',
+                'images/galaxy/Picture13.jpg', 'images/galaxy/Picture14.jpg', 'images/galaxy/Picture15.jpg',
+                'images/galaxy/Picture16.jpg', 'images/galaxy/Picture17.jpg', 'images/galaxy/Picture18.jpg',
+                'images/galaxy/Picture19.jpg', 'images/galaxy/Picture20.jpg', 'images/galaxy/Picture21.jpg',
+                'images/galaxy/Picture22.jpg', 'images/galaxy/Picture23.jpg', 'images/galaxy/Picture24.jpg',
+                'images/galaxy/Picture25.jpg', 'images/galaxy/Picture26.jpg', 'images/galaxy/Picture27.jpg',
+                'images/galaxy/Picture28.jpg'
+            ]
+
+            function initGalaxy() {
+                console.log('Initializing galaxy...')
+                const canvas = document.getElementById('canvas')
+                
+                if (!canvas) {
+                    console.error('Canvas not found!')
+                    return
+                }
+                
+                scene = new THREE.Scene()
+
+                camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+                camera.position.z = 28
+
+                renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true })
+                renderer.setSize(window.innerWidth, window.innerHeight)
+                renderer.setClearColor(0x0a0015, 1)
+                
+                console.log('Renderer initialized')
+
+                controls = new THREE.OrbitControls(camera, renderer.domElement)
+                controls.enableDamping = true
+                controls.dampingFactor = 0.05
+                controls.screenSpacePanning = false
+                controls.minDistance = 5
+                controls.maxDistance = 30
+                controls.autoRotate = false
+                controls.target.set(0, 0, 0)
+                controls.update()
+                
+                console.log('Controls initialized')
+
+                // Lights
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+                scene.add(ambientLight)
+
+                const pointLight1 = new THREE.PointLight(0xff69b4, 2, 100)
+                pointLight1.position.set(10, 10, 10)
+                scene.add(pointLight1)
+
+                const pointLight2 = new THREE.PointLight(0xffb3d9, 1.5, 100)
+                pointLight2.position.set(-10, -10, -10)
+                scene.add(pointLight2)
+
+                const pointLight3 = new THREE.PointLight(0xff1493, 1.8, 100)
+                pointLight3.position.set(0, 15, 5)
+                scene.add(pointLight3)
+
+                // Central planet
+                const planetGeometry = new THREE.SphereGeometry(3.5, 64, 64)
+                const planetMaterial = new THREE.MeshPhongMaterial({
+                    color: 0xffb3d9,
+                    emissive: 0xff69b4,
+                    emissiveIntensity: 0.5,
+                    shininess: 150,
+                    specular: 0xffffff
+                })
+                planet = new THREE.Mesh(planetGeometry, planetMaterial)
+                scene.add(planet)
+
+                // Glow
+                const glowGeometry = new THREE.SphereGeometry(3.9, 32, 32)
+                const glowMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xff69b4,
+                    transparent: true,
+                    opacity: 0.2,
+                    side: THREE.BackSide
+                })
+                glow = new THREE.Mesh(glowGeometry, glowMaterial)
+                scene.add(glow)
+
+                // Rings
+                for (let i = 0; i < 3; i++) {
+                    const ringGeometry = new THREE.TorusGeometry(4.5 + i * 0.7, 0.1, 16, 100)
+                    const ringMaterial = new THREE.MeshPhongMaterial({
+                        color: new THREE.Color().setHSL(0.9 + i * 0.02, 0.8, 0.6),
+                        emissive: new THREE.Color().setHSL(0.9 + i * 0.02, 1, 0.5),
+                        emissiveIntensity: 0.6,
+                        transparent: true,
+                        opacity: 0.7 - i * 0.1
+                    })
+                    const ring = new THREE.Mesh(ringGeometry, ringMaterial)
+                    ring.rotation.x = Math.PI / 2.5 + i * 0.1
+                    ring.userData.rotationSpeed = 0.003 + i * 0.001
+                    scene.add(ring)
+                    rings.push(ring)
+                }
+
+                // Photo frames
+                const textureLoader = new THREE.TextureLoader()
+                for (let i = 0; i < 28; i++) {
+                    const frameGroup = new THREE.Group()
+
+                    const photoGeometry = new THREE.PlaneGeometry(3, 3)
+                    const photoMaterial = new THREE.MeshBasicMaterial({
+                        color: 0xffffff,
+                        side: THREE.DoubleSide
+                    })
+
+                    if (imageUrls[i] && imageUrls[i].trim() !== '') {
+                        textureLoader.load(imageUrls[i], function (texture) {
+                            photoMaterial.map = texture
+                            photoMaterial.needsUpdate = true
+                        })
+                    }
+
+                    const photo = new THREE.Mesh(photoGeometry, photoMaterial)
+                    frameGroup.add(photo)
+
+                    const borderGeometry = new THREE.PlaneGeometry(3.4, 3.4)
+                    const borderMaterial = new THREE.MeshPhongMaterial({
+                        color: 0xff69b4,
+                        emissive: 0xff1493,
+                        emissiveIntensity: 0.6,
+                        transparent: true,
+                        opacity: 0.8
+                    })
+                    const border = new THREE.Mesh(borderGeometry, borderMaterial)
+                    border.position.z = -0.05
+                    frameGroup.add(border)
+
+                    const haloGeometry = new THREE.PlaneGeometry(4, 4)
+                    const haloMaterial = new THREE.MeshBasicMaterial({
+                        color: 0xff69b4,
+                        transparent: true,
+                        opacity: 0.2,
+                        side: THREE.DoubleSide
+                    })
+                    const halo = new THREE.Mesh(haloGeometry, haloMaterial)
+                    halo.position.z = -0.1
+                    frameGroup.add(halo)
+
+                    const angle = (i / 28) * Math.PI * 2
+                    const radius = 10 + (i % 3) * 2
+
+                    frameGroup.userData = {
+                        angle: angle,
+                        radius: radius,
+                        speed: 0.15 + (i % 4) * 0.05,
+                        photo: photo,
+                        border: border,
+                        halo: halo,
+                        index: i
+                    }
+
+                    scene.add(frameGroup)
+                    photoFrames.push(frameGroup)
+                }
+
+                // Particles
+                const particlesGeometry = new THREE.BufferGeometry()
+                const particleCount = 3000
+                const positions = new Float32Array(particleCount * 3)
+                const colors = new Float32Array(particleCount * 3)
+                const sizes = new Float32Array(particleCount)
+
+                for (let i = 0; i < particleCount; i++) {
+                    positions[i * 3] = (Math.random() - 0.5) * 100
+                    positions[i * 3 + 1] = (Math.random() - 0.5) * 100
+                    positions[i * 3 + 2] = (Math.random() - 0.5) * 100
+
+                    const color = new THREE.Color()
+                    color.setHSL(0.85 + Math.random() * 0.15, 0.8, 0.6)
+                    colors[i * 3] = color.r
+                    colors[i * 3 + 1] = color.g
+                    colors[i * 3 + 2] = color.b
+
+                    sizes[i] = Math.random() * 3
+                }
+
+                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+                particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3))
+                particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1))
+
+                const particlesMaterial = new THREE.PointsMaterial({
+                    size: 0.2,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.8,
+                    blending: THREE.AdditiveBlending
+                })
+
+                particles = new THREE.Points(particlesGeometry, particlesMaterial)
+                scene.add(particles)
+
+                // Orbiting objects
+                for (let i = 0; i < 20; i++) {
+                    const geometry = new THREE.OctahedronGeometry(0.3)
+                    const hue = 0.85 + Math.random() * 0.15
+                    const material = new THREE.MeshPhongMaterial({
+                        color: new THREE.Color().setHSL(hue, 0.9, 0.6),
+                        emissive: new THREE.Color().setHSL(hue, 1, 0.5),
+                        emissiveIntensity: 0.8,
+                        shininess: 150
+                    })
+
+                    const obj = new THREE.Mesh(geometry, material)
+
+                    const angle = (i / 20) * Math.PI * 2
+                    const radius = 6 + Math.random() * 3
+
+                    obj.userData = {
+                        angle: angle,
+                        radius: radius,
+                        speed: 0.3 + Math.random() * 0.4,
+                        rotationSpeed: 0.02 + Math.random() * 0.03
+                    }
+
+                    scene.add(obj)
+                    orbitingObjects.push(obj)
+                }
+
+                // Shooting stars
+                initShootingStars()
+                
+                console.log('Galaxy initialization complete, starting animation')
+                animate()
+            }
+
+            // Shooting stars system
+            const MAX_STARS = 5
+            const STAR_SPEED = 0.7
+            const STAR_LENGTH = 15
+            const SPAWN_INTERVAL = 50
+            let lastSpawnTime = 0
+
+            const starMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    color: { value: new THREE.Color(0xffffff) },
+                    opacity: { value: 1.0 },
+                    time: { value: 0.0 },
+                    length: { value: STAR_LENGTH }
+                },
+                vertexShader: `
+                    uniform float time;
+                    uniform float length;
+                    varying vec3 vPosition;
+
+                    void main() {
+                        vPosition = position;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform vec3 color;
+                    uniform float opacity;
+                    uniform float time;
+                    uniform float length;
+                    varying vec3 vPosition;
+
+                    void main() {
+                        float z = vPosition.z;
+                        float normalizedZ = (z + length / 2.0) / length;
+                        float tailFade = pow(normalizedZ, 4.0);
+                        float sparkle = sin(time * 5.0) * 0.05 + 0.95;
+                        float alpha = opacity * tailFade * sparkle;
+                        vec3 finalColor = color + vec3(0.1, 0.1, 0.1) * normalizedZ;
+                        gl_FragColor = vec4(finalColor, alpha);
+                    }
+                `,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            })
+
+            function initShootingStars() {
+                // Initialization handled in animate loop
+            }
+
+            function createShootingStar() {
+                const pathPoints = []
+                const range = 50
+
+                const startX = range + Math.random() * 20
+                const startY = (Math.random() - 0.5) * range
+                const startZ = -range - Math.random() * 20
+
+                const endX = -range - Math.random() * 20
+                const endY = (Math.random() - 0.5) * range
+                const endZ = range + Math.random() * 20
+
+                pathPoints.push(new THREE.Vector3(0, 0, -STAR_LENGTH / 2))
+                pathPoints.push(new THREE.Vector3(0, 0, STAR_LENGTH / 2))
+
+                const curve = new THREE.CatmullRomCurve3(pathPoints)
+                const geometry = new THREE.TubeGeometry(curve, 1, 0.3, 8, false)
+
+                const star = new THREE.Mesh(geometry, starMaterial.clone())
+
+                const direction = new THREE.Vector3()
+                    .subVectors(new THREE.Vector3(endX, endY, endZ), new THREE.Vector3(startX, startY, startZ))
+                    .normalize()
+                const axis = new THREE.Vector3(0, 0, 1)
+                const quaternion = new THREE.Quaternion().setFromUnitVectors(axis, direction)
+                star.rotation.setFromQuaternion(quaternion)
+
+                star.position.set(startX, startY, startZ)
+
+                star.userData = {
+                    velocity: new THREE.Vector3(endX - startX, endY - startY, endZ - startZ)
+                        .normalize()
+                        .multiplyScalar(STAR_SPEED)
+                }
+
+                scene.add(star)
+                shootingStars.push(star)
+            }
+
+            function updateShootingStars(delta) {
+                if (Date.now() - lastSpawnTime > SPAWN_INTERVAL && shootingStars.length < MAX_STARS) {
+                    createShootingStar()
+                    lastSpawnTime = Date.now()
+                }
+
+                const starsToRemove = []
+
+                shootingStars.forEach((star, index) => {
+                    if (star.material && star.material.uniforms && star.material.uniforms.time) {
+                        star.material.uniforms.time.value = (Date.now() / 1000) * 0.5
+                    }
+
+                    star.position.add(star.userData.velocity.clone().multiplyScalar(delta))
+
+                    if (
+                        star.position.x < -60 || star.position.x > 60 ||
+                        star.position.y < -60 || star.position.y > 60 ||
+                        star.position.z < -60 || star.position.z > 60
+                    ) {
+                        starsToRemove.push(index)
+                    }
+                })
+
+                for (let i = starsToRemove.length - 1; i >= 0; i--) {
+                    const index = starsToRemove[i]
+                    const star = shootingStars[index]
+
+                    if (star.geometry) star.geometry.dispose()
+                    if (star.material) {
+                        star.material.dispose()
+                    }
+
+                    scene.remove(star)
+                    shootingStars.splice(index, 1)
+                }
+            }
+
+            // Animation loop
+            let time = 0
+            const clock = new THREE.Clock()
+            let animationRunning = false
+
+            function animate() {
+                if (!galaxyInitialized || !scene || !renderer || !camera) {
+                    console.log('Animation stopped - not initialized')
+                    return
+                }
+                
+                if (!animationRunning) {
+                    console.log('Animation started')
+                    animationRunning = true
+                }
+                
+                requestAnimationFrame(animate)
+                const delta = clock.getDelta()
+                time += delta
+
+                planet.rotation.y += 0.005
+                glow.rotation.y -= 0.003
+                glow.material.opacity = 0.2 + Math.sin(time * 2) * 0.1
+
+                rings.forEach(ring => {
+                    ring.rotation.z += ring.userData.rotationSpeed
+                })
+
+                photoFrames.forEach(frame => {
+                    frame.userData.angle += frame.userData.speed * 0.008
+
+                    const x = Math.cos(frame.userData.angle) * frame.userData.radius
+                    const z = Math.sin(frame.userData.angle) * frame.userData.radius
+                    const y = Math.sin(time * 1.5 + frame.userData.index * 0.5) * 2
+
+                    frame.position.set(x, y, z)
+                    frame.lookAt(planet.position)
+
+                    frame.userData.halo.material.opacity = 0.2 + Math.sin(time * 3 + frame.userData.index) * 0.15
+                    frame.userData.border.material.emissiveIntensity = 0.6 + Math.sin(time * 4 + frame.userData.index) * 0.3
+                })
+
+                orbitingObjects.forEach(obj => {
+                    obj.userData.angle += obj.userData.speed * 0.01
+
+                    obj.position.x = Math.cos(obj.userData.angle) * obj.userData.radius
+                    obj.position.z = Math.sin(obj.userData.angle) * obj.userData.radius
+                    obj.position.y = Math.sin(time * 2 + obj.userData.angle) * 2
+
+                    obj.rotation.x += obj.userData.rotationSpeed
+                    obj.rotation.y += obj.userData.rotationSpeed
+                })
+
+                particles.rotation.y += 0.0003
+                const positionsAttr = particles.geometry.attributes.position.array
+                for (let i = 0; i < positionsAttr.length; i += 3) {
+                    positionsAttr[i + 1] += Math.sin(time + i) * 0.005
+                }
+                particles.geometry.attributes.position.needsUpdate = true
+
+                updateShootingStars(delta * 60)
+
+                controls.update()
+                renderer.render(scene, camera)
+            }
+
+            // Window resize
+            window.addEventListener('resize', () => {
+                if (galaxyInitialized) {
+                    camera.aspect = window.innerWidth / window.innerHeight
+                    camera.updateProjectionMatrix()
+                    renderer.setSize(window.innerWidth, window.innerHeight)
+                    controls.update()
+                }
+            })
+
+            // Visibility change
             document.addEventListener('visibilitychange', () => {
                 if (document.hidden) {
                     if (isPlaying) music.pause()
@@ -685,12 +1167,6 @@
                     resumeHearts()
                 }
             })
-
-            // --- NEW: Go To External Gallery Link ---
-            function goToGalaxyLink() {
-                // Thay 'galaxy.html' bằng đường dẫn thực tế của trang bạn muốn chuyển đến
-                window.location.href = 'galaxy.html'
-            }
         </script>
     </body>
 </html>
