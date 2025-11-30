@@ -472,22 +472,27 @@
             }
 
             @media (max-width: 768px) and (orientation: portrait) {
-                #galaxyPage .rotate-notice {
-                    display: flex;
+                #galaxyPage.active .rotate-notice {
+                    display: flex !important;
+                }
+                
+                #galaxyPage.active #canvas {
+                    display: none;
+                }
+                
+                #galaxyPage.active .galaxy-info {
+                    display: none;
+                }
+            }
+            
+            @media (orientation: landscape) {
+                .rotate-notice {
+                    display: none !important;
                 }
             }
         </style>
     </head>
     <body>
-        <!-- Rotate Notice for Galaxy Page -->
-        <div class="rotate-notice" id="rotateNotice">
-            <div class="rotate-icon">📱➜📱</div>
-            <div class="rotate-text">
-                Vui lòng xoay ngang màn hình<br />
-                để có trải nghiệm tốt nhất ✨
-            </div>
-        </div>
-
         <!-- Hearts Animation -->
         <div class="hearts-animation" id="heartsContainer"></div>
 
@@ -563,6 +568,14 @@
 
         <!-- Page 2 - Galaxy -->
         <div class="page" id="galaxyPage">
+            <div class="rotate-notice" id="rotateNotice" style="display: none;">
+                <div class="rotate-icon">📱➜📱</div>
+                <div class="rotate-text">
+                    Vui lòng xoay ngang màn hình<br />
+                    để có trải nghiệm tốt nhất ✨
+                </div>
+            </div>
+            
             <div class="galaxy-info">
                 ✨ Milky Way Galaxy ✨
                 <div class="subtitle">Vũ trụ của tình yêu chúng ta</div>
