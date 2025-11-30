@@ -304,47 +304,6 @@
                 line-height: 1.6;
             }
 
-            .qr-wrapper {
-                background: white;
-                padding: 30px;
-                border-radius: 20px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-                margin: 30px auto;
-                max-width: 350px;
-                text-align: center;
-            }
-
-            .qr-code {
-                width: 100%;
-                max-width: 280px;
-                height: auto;
-                aspect-ratio: 1;
-                margin: 0 auto;
-                background: #f8f8f8;
-                border: 4px solid #764ba2;
-                border-radius: 15px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                overflow: hidden;
-            }
-
-            .qr-code img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-
-            .qr-label {
-                margin-top: 20px;
-                font-size: 20px;
-                font-weight: 600;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-
             /* Optimized hearts animation - paused during scroll */
             .hearts-animation {
                 position: fixed;
@@ -557,16 +516,12 @@
         <div class="page" id="page2">
             <div class="gallery-container">
                 <div class="gallery-title">✨ Galaxy Love ✨</div>
-                <div class="gallery-description">
-                    Những khoảnh khắc yêu thương của chúng mình<br />
-                    Quét mã QR để xem thêm nhiều kỷ niệm đẹp nhé! 💕
-                </div>
+                <div class="gallery-description">Những khoảnh khắc yêu thương của chúng mình</div>
 
-                <div class="qr-wrapper">
-                    <div class="qr-code">
-                        <img src="images/main-page/qr-2.png" alt="Galaxy Love QR" loading="lazy" />
-                    </div>
-                    <div class="qr-label">Scan me!</div>
+                <div style="text-align: center; margin-top: 30px">
+                    <button class="arrow-button" onclick="goToGalaxyLink()">
+                        💌 Lưu Giữ Những Yêu Thương 💌
+                    </button>
                 </div>
             </div>
         </div>
@@ -730,6 +685,12 @@
                     resumeHearts()
                 }
             })
+
+            // --- NEW: Go To External Gallery Link ---
+            function goToGalaxyLink() {
+                // Thay 'galaxy.html' bằng đường dẫn thực tế của trang bạn muốn chuyển đến
+                window.location.href = 'galaxy.html'
+            }
         </script>
     </body>
 </html>
