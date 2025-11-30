@@ -3,6 +3,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link type="image/png" sizes="16x16" rel="icon" href="favicons/icons8-favorite-windows-11-color-16.png" />
+        <link type="image/png" sizes="32x32" rel="icon" href="favicons/icons8-favorite-windows-11-color-32.png" />
+        <link type="image/png" sizes="96x96" rel="icon" href="favicons/icons8-favorite-windows-11-color-96.png" />
         <title>Happy 5 Months ❤️</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -374,6 +377,8 @@
                 will-change: transform, opacity;
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
+                left: var(--random-left);
+                animation-delay: var(--random-delay);
             }
 
             @keyframes float-heart {
@@ -567,8 +572,8 @@
         </div>
 
         <!-- Audio -->
-        <audio id="bgMusic" loop preload="none" autoplay>
-            <source src="audios/Nguyện Yêu.mp3" type="audio/mpeg" />
+        <audio id="bgMusic" loop preload="auto">
+            <source src="audios/nguyen-yeu.aac" type="audio/mpeg" />
         </audio>
 
         <script>
@@ -576,39 +581,45 @@
             const music = document.getElementById('bgMusic')
             let isPlaying = false
             let audioContext = null
+            const musicControl = document.getElementById('musicControl') // Thêm nút điều khiển nhạc nếu có
 
-            // iOS requires user interaction to play audio
+            // Khởi tạo AudioContext và resume (cần tương tác người dùng)
             function initAudio() {
                 if (!audioContext) {
                     audioContext = new (window.AudioContext || window.webkitAudioContext)()
                 }
                 if (audioContext.state === 'suspended') {
-                    audioContext.resume()
+                    // Cố gắng resume AudioContext để có thể phát nhạc
+                    audioContext.resume().catch(e => console.error('AudioContext resume failed:', e))
                 }
             }
 
-            // Try auto play on first interaction
-            let firstInteraction = true
-            document.addEventListener(
-                'click',
-                function playMusic() {
-                    if (firstInteraction && !isPlaying) {
-                        firstInteraction = false
-                        initAudio()
-                        music
-                            .play()
-                            .then(() => {
-                                isPlaying = true
-                            })
-                            .catch(() => {})
-                    }
-                },
-                { once: true }
-            )
+            // Hàm bật/tắt nhạc
+            function toggleMusic() {
+                initAudio() // Khởi tạo AudioContext (chỉ làm khi có tương tác)
+                if (isPlaying) {
+                    music.pause()
+                    isPlaying = false
+                    // musicControl.textContent = '🔇'; // Cập nhật icon
+                } else {
+                    // Đảm bảo file được tải đủ trước khi play (preload="auto" sẽ giúp)
+                    music
+                        .play()
+                        .then(() => {
+                            isPlaying = true
+                            // musicControl.textContent = '🔊'; // Cập nhật icon
+                        })
+                        .catch(e => {
+                            console.warn("Audio play failed (maybe user hasn't interacted enough or file error):", e)
+                            isPlaying = false
+                        })
+                }
+            }
 
-            // Optimized hearts animation
+            // Optimized hearts animation (giữ nguyên logic animation của bạn, nó đã khá tốt)
             let heartCount = 0
-            const maxHearts = 4 // Reduced for better performance
+            // Giảm số lượng trái tim tối đa hơn nữa cho hiệu suất tối đa trên iOS cũ
+            const maxHearts = 3
             let heartInterval
             let isScrolling = false
             let scrollTimeout
@@ -621,8 +632,9 @@
                 heart.className = 'heart'
                 const hearts = ['💕', '💖', '💗']
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)]
-                heart.style.left = Math.random() * 100 + '%'
-                heart.style.animationDelay = Math.random() * 2 + 's'
+                // Dùng CSS variables để tránh thao tác DOM quá nhiều
+                heart.style.setProperty('--random-left', Math.random() * 100 + '%')
+                heart.style.setProperty('--random-delay', Math.random() * 2 + 's')
                 heartsContainer.appendChild(heart)
 
                 heartCount++
@@ -633,30 +645,26 @@
                 }, 5000)
             }
 
-            // Start hearts animation
             function startHearts() {
                 heartsContainer.classList.add('active')
-                heartInterval = setInterval(createHeart, 2500) // Slower creation
+                heartInterval = setInterval(createHeart, 3000) // Tăng khoảng thời gian tạo
             }
 
-            // Stop hearts animation
             function stopHearts() {
                 clearInterval(heartInterval)
                 heartsContainer.classList.remove('active')
             }
 
-            // Pause hearts during scroll - iOS optimization
+            // Giữ nguyên các hàm pause/resume hearts
             function pauseHearts() {
                 heartsContainer.classList.add('paused')
                 isScrolling = true
             }
-
             function resumeHearts() {
                 heartsContainer.classList.remove('paused')
                 isScrolling = false
             }
 
-            // Detect scrolling and pause hearts
             let scrollElements = [window, document.getElementById('letterContent')]
             scrollElements.forEach(element => {
                 if (element) {
@@ -672,25 +680,19 @@
                 }
             })
 
-            // Start hearts on page load - delayed for better initial performance
             setTimeout(startHearts, 1500)
 
             // Show letter
             function showLetter() {
                 document.getElementById('letterOverlay').classList.add('show')
-                initAudio()
 
+                // **Quan trọng:** Gọi toggleMusic() để phát nhạc ngay sau khi người dùng tương tác (nhấn nút)
                 if (!isPlaying) {
-                    music
-                        .play()
-                        .then(() => {
-                            isPlaying = true
-                        })
-                        .catch(() => {})
+                    toggleMusic()
                 }
             }
 
-            // Open letter - iOS optimized
+            // Open letter
             function openLetter() {
                 const envelope = document.getElementById('envelope')
                 const letterContent = document.getElementById('letterContent')
@@ -700,9 +702,9 @@
                     envelope.style.display = 'none'
                     letterContent.classList.add('show')
 
-                    // Force iOS Safari to render properly
                     requestAnimationFrame(() => {
                         letterContent.scrollTop = 0
+                        // Thao tác nhỏ để đảm bảo render lại
                         letterContent.style.WebkitOverflowScrolling = 'touch'
                     })
                 }, 800)
@@ -713,7 +715,6 @@
                 document.getElementById('page1').classList.remove('active')
                 document.getElementById('letterOverlay').classList.remove('show')
 
-                // Small delay for smooth transition
                 setTimeout(() => {
                     document.getElementById('page2').classList.add('active')
                 }, 100)
@@ -729,13 +730,6 @@
                     resumeHearts()
                 }
             })
-
-            // iOS performance optimization - reduce animations on low memory
-            if (window.performance && window.performance.memory) {
-                if (window.performance.memory.jsHeapSizeLimit < 1000000000) {
-                    maxHearts = 2
-                }
-            }
         </script>
     </body>
 </html>
